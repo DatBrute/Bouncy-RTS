@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds5xx4k7kypi3"]
+
+[ext_resource type="PackedScene" uid="uid://caty75u2gtqk4" path="res://nodes/core/Entity.tscn" id="1_3fgvw"]
+[ext_resource type="PackedScene" uid="uid://dfbtdd2rcj8hm" path="res://nodes/core/Core.tscn" id="2_38kau"]
+
+[node name="World" type="Node2D"]
+
+[node name="Unit" parent="." instance=ExtResource( "1_3fgvw" )]
+position = Vector2(250, 250)
+
+[node name="Unit2" parent="." instance=ExtResource( "1_3fgvw" )]
+position = Vector2(750, 250)
+
+[node name="Core" parent="." instance=ExtResource( "2_38kau" )]

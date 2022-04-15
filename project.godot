@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Bouncy RTS"
+run/main_scene="res://saves/World.tscn"
+config/icon="res://assets/icon.png"
+config/features=PackedStringArray("4.0")
+
+[input]
+
+zoom_in={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"button_mask":16,"position":Vector2(281, 119),"global_position":Vector2(281, 119),"factor":0.0166667,"button_index":5,"pressed":true,"double_click":false,"script":null)
+]
+}
+zoom_out={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"button_mask":8,"position":Vector2(207, 127),"global_position":Vector2(207, 127),"factor":0.00833333,"button_index":4,"pressed":true,"double_click":false,"script":null)
+]
+}
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://assets/default_env.tres"
