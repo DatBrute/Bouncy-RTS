@@ -10,6 +10,7 @@ const MAX_ZOOM = 5
 
 func _ready():
 	print(">>C0R3 0NL1N3<<")
+	print(get_multiplayer_authority())
 	
 func camera_input(c, delta):
 	var zoom = ZOOM_SPEED * delta
@@ -34,3 +35,9 @@ func _zoom(c, amount):
 
 func _process(delta):
 	camera_input(camera, delta)
+	test_rpc()
+	
+@rpc
+func test_rpc():
+	print("blah")
+
