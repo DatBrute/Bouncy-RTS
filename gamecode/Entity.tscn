@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://caty75u2gtqk4"]
+[gd_scene load_steps=3 format=3 uid="uid://cwrgdtix558bi"]
 
-[ext_resource type="Script" path="res://nodes/core/Entity.gd" id="1"]
+[ext_resource type="Script" path="res://gamecode/Entity.gd" id="1"]
 
 [sub_resource type="CircleShape2D" id="1"]
 radius = 50.0

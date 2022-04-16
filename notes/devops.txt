@@ -8,5 +8,3 @@ vi the .pub and throw it in your github SSH settings (try right-clicking the ter
 git clone the project
 insert a godot exe from https://downloads.tuxfamily.org/godotengine/ (it's too large to go on Github)
 run the godot exe by calling its absolute path (possibly after calling chmod +x on it)
-
-tbh I am not sure why I even considered Filezilla-style FTP when git exists
