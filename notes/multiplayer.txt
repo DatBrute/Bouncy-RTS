@@ -1,0 +1,18 @@
+in multiplayer bomberman demo, the following will make the server playerless:
+gamestate:121 comment it out
+gamestate:122 set it to 0
+
+Then to make it headless:
+lobby:95 change to "gamestate.rpc("begin_game")" so that we can start as a player
+Change gamestate.begin_game() to this:
+	
+	@rpc(any_peer)
+	func begin_game():
+		if(not multiplayer.is_server()):
+			return
+		rpc("load_world")
+
+		var world ...
+
+After that probably all you have to do is make it headless (and ensure it's not insanely buggy)
+Ideally you'd have a meta-server with multiple rooms, but this is not necessary until the game is released
