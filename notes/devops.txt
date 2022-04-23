@@ -8,3 +8,8 @@ vi the .pub and throw it in your github SSH settings (try right-clicking the ter
 git clone the project
 insert a godot exe from https://downloads.tuxfamily.org/godotengine/ (it's too large to go on Github)
 run the godot exe by calling its absolute path (possibly after calling chmod +x on it)
+
+IMPORTANT:
+for it to work, you may have to type "ufw allow 10567/udp" on the server
+(or alternatively type that into /etc/ufw/before.rule)
+and ufw status to confirm the ports are as they should be
