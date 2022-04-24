@@ -1,3 +1,7 @@
-Multiplayer does not exit gracefully
+Descending priority
 
-Multiplayer does not support levels
+RTS basics
+
+Multiplayer does not exit gracefully from the client, 
+the server must be restarted since it's still online
+and it does not seem to destroy synced objects properly
