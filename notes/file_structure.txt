@@ -1,6 +1,0 @@
-assets 					# for images and sounds
-gamecode				# code that is used only while playing the game, not while on the main menu
-	components			# nodes that should be direct children of some Entity.tscn instances and sometimes added/deleted
-	core				# nodes that should be indirect children of every World.tscn instance and never added/deleted
-gameobjects 			# instances of gamecode scenes for non-coders to edit, no script changes allowed
-notes					# like this one!

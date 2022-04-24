@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Bouncy RTS"
-run/main_scene="res://gameobjects/scenarios/test.tscn"
+run/main_scene="res://edit/maps/test.tscn"
 config/icon="res://assets/icon.png"
 config/features=PackedStringArray("4.0")
+
+[autoload]
+
+gamestate="*res://src/non_session/gamestate.gd"
 
 [input]
 
