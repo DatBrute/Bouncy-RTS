@@ -60,7 +60,7 @@ func _switch_to_players():
 	$Connect/ErrorLabel.text = ""
 	$Players/Map.clear()
 	for map in $"/root/gamestate".maps:
-		$Players/Map.add_item(map.trim_prefix("res://maps/current/").trim_suffix(".tscn"))
+		$Players/Map.add_item(map.trim_prefix("res://edit/maps/current/").trim_suffix(".tscn"))
 
 
 func _on_connection_failed():

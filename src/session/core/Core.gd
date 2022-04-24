@@ -7,9 +7,6 @@ const PAN_SPEED = 1000
 const ZOOM_SPEED = 4
 const MIN_ZOOM = 0.2
 const MAX_ZOOM = 5
-
-func _ready():
-	print(">>C0R3 0NL1N3<<")
 	
 func camera_input(c, delta):
 	var zoom = ZOOM_SPEED * delta

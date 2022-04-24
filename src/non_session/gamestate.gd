@@ -97,10 +97,6 @@ func load_world():
 	get_tree().get_root().add_child(world)
 	get_tree().get_root().get_node("Lobby").hide()
 
-	# Set up score.
-	world.get_node("Score").add_player(multiplayer.get_unique_id(), player_name)
-	for player in players:
-		world.get_node("Score").add_player(player.id, player.name)
 	get_tree().set_pause(false) # Unpause and unleash the game!
 
 
@@ -128,7 +124,7 @@ func get_player_list():
 func get_player_name():
 	return player_name
 
-@rpc(any_peer)
+@rpc(any_peer, call_local)
 func set_map(index):
 	map = index
 	map_changed.emit(index)
@@ -139,26 +135,27 @@ func begin_game():
 		return
 	rpc("load_world")
 
-	var world = get_tree().get_root().get_node("World")
 	# BEGIN GAME-SPECIFIC CODE
-	var player_scene = load("res://player.tscn")
+#	var world = get_tree().get_root().get_node("World")
 
-	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.
-	var spawn_points = {}
-#	spawn_points[1] = 0 # Server in spawn point 0.
-	var spawn_point_idx = 0
-	for p in players:
-		spawn_points[p.id] = spawn_point_idx
-		spawn_point_idx += 1
-
-	for p_id in spawn_points:
-		var spawn_pos = world.get_node("SpawnPoints/" + str(spawn_points[p_id])).position
-		var player = player_scene.instantiate()
-		player.synced_position = spawn_pos
-		player.name = str(p_id)
-		player.set_player_name(player_name if p_id == multiplayer.get_unique_id() 
-			else find_player_by_id(p_id).name)
-		world.get_node("Players").add_child(player)
+#	var player_scene = load("res://player.tscn")
+#
+#	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.
+#	var spawn_points = {}
+##	spawn_points[1] = 0 # Server in spawn point 0.
+#	var spawn_point_idx = 0
+#	for p in players:
+#		spawn_points[p.id] = spawn_point_idx
+#		spawn_point_idx += 1
+#
+#	for p_id in spawn_points:
+#		var spawn_pos = world.get_node("SpawnPoints/" + str(spawn_points[p_id])).position
+#		var player = player_scene.instantiate()
+#		player.synced_position = spawn_pos
+#		player.name = str(p_id)
+#		player.set_player_name(player_name if p_id == multiplayer.get_unique_id() 
+#			else find_player_by_id(p_id).name)
+#		world.get_node("Players").add_child(player)
 	# END GAME-SPECIFIC-CODE
 
 func find_player_by_id(id):
@@ -183,7 +180,7 @@ func _ready():
 	multiplayer.connected_to_server.connect(_connected_ok)
 	multiplayer.connection_failed.connect(_connected_fail)
 	multiplayer.server_disconnected.connect(_server_disconnected)
-	maps = dir_contents("res://maps/current")
+	maps = dir_contents("res://edit/maps/current")
 
 func dir_contents(path):
 	var dir = Directory.new()

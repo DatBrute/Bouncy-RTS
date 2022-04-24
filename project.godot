@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Bouncy RTS"
-run/main_scene="res://edit/maps/test.tscn"
+run/main_scene="res://src/non_session/lobby.tscn"
 config/icon="res://assets/icon.png"
 config/features=PackedStringArray("4.0")
 
