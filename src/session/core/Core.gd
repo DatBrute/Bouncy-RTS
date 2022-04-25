@@ -1,14 +1,21 @@
 extends Node
 
-@onready var camera = $"FreeCamera"
-var follow = false
-
 const PAN_SPEED = 1000
 const ZOOM_SPEED = 4
 const MIN_ZOOM = 0.2
 const MAX_ZOOM = 5
 const PAN_SCREEN_EDGE_FRACTION = 0.1
-	
+
+@onready var camera = $"FreeCamera"
+var follow = false
+
+var selecting = false
+
+func _process(delta):
+	camera_input(camera, delta)
+	if not multiplayer.is_server():
+		select_input()
+
 func camera_input(c, delta):
 	var zoom = ZOOM_SPEED * delta
 	var pan = PAN_SPEED / c.zoom.x * delta
@@ -18,6 +25,8 @@ func camera_input(c, delta):
 		_zoom(c, zoom)
 	if Input.is_action_just_released('zoom_in'):
 		_zoom(c, -zoom)
+	if Input.is_action_just_pressed('zoom_out'):
+		_zoom(c, zoom)
 	if pos.x <= PAN_SCREEN_EDGE_FRACTION:
 		c.offset.x -= pan
 	if pos.x >= 1-PAN_SCREEN_EDGE_FRACTION:
@@ -31,6 +40,21 @@ func camera_input(c, delta):
 func _zoom(c, amount):
 	c.zoom.x = clamp(c.zoom.x + amount, MIN_ZOOM, MAX_ZOOM)
 	c.zoom.y = clamp(c.zoom.y + amount, MIN_ZOOM, MAX_ZOOM)
+	
+func select_input():
 
-func _process(delta):
-	camera_input(camera, delta)
+	if Input.is_action_just_pressed("select"):
+		var pos = get_viewport().get_mouse_position()
+		$UI/SelectionBox.start = pos
+		$UI/SelectionBox.end = pos
+		$UI/SelectionBox.visible = true
+		selecting = true
+	elif Input.is_action_just_released("select"):
+		$UI/SelectionBox.visible = false
+		selecting = false
+	elif(selecting):
+		var pos = get_viewport().get_mouse_position()
+		$UI/SelectionBox.end = pos
+
+func _draw():
+	pass
