@@ -7,21 +7,24 @@ const PAN_SPEED = 1000
 const ZOOM_SPEED = 4
 const MIN_ZOOM = 0.2
 const MAX_ZOOM = 5
+const PAN_SCREEN_EDGE_FRACTION = 0.1
 	
 func camera_input(c, delta):
 	var zoom = ZOOM_SPEED * delta
 	var pan = PAN_SPEED / c.zoom.x * delta
+	var view =  get_viewport()
+	var pos = view.get_mouse_position() / view.get_visible_rect().size
 	if Input.is_action_just_released('zoom_out'):
 		_zoom(c, zoom)
 	if Input.is_action_just_released('zoom_in'):
 		_zoom(c, -zoom)
-	if Input.is_action_pressed("ui_left"):
+	if pos.x <= PAN_SCREEN_EDGE_FRACTION:
 		c.offset.x -= pan
-	if Input.is_action_pressed('ui_right'):
+	if pos.x >= 1-PAN_SCREEN_EDGE_FRACTION:
 		c.offset.x += pan 
-	if Input.is_action_pressed("ui_up"):
+	if pos.y <= PAN_SCREEN_EDGE_FRACTION:
 		c.offset.y -= pan
-	if Input.is_action_pressed("ui_down"):
+	if pos.y >= 1-PAN_SCREEN_EDGE_FRACTION:
 		c.offset.y += pan
 
 		
