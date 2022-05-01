@@ -3,7 +3,7 @@ Basically units have these stats:
 Speed: Obvious
 Climb speed: Speed when moving over enemy buildings, no such modifier on yours.
 Size:  Has a variety of effects like HP and speed and range and damage and who you can eat. Limitless.
-	If you are very big you eat instantly. Otherwise you bump and both lose small amounst of HP.
+	If you are very big you eat instantly. Otherwise you bump and both go flying, dealing no direct damage.
 Culture: Ticking effect that spreads your team's culture, which spreads automagically, 
 	has some national effect but also: 
 			slowly grows units
@@ -14,3 +14,10 @@ Culture: Ticking effect that spreads your team's culture, which spreads automagi
 Range: Range at which you hit enemy units.
 Wump ability: Channeled active with target circle, unique effect for each unit, cancelled by bump, 
 	only possible at certain fixed size. Destroys buildings instantly.
+Growth multiplier
+Bump multiplier
+
+
+May be a good idea to introduce cliffs that can be climbed/thrown off if the game has a knockback focus.
+Maybe colors representing elements and units/nations have a home element and they merge together and make big boom.
+Probably damage and maybe stun for hitting against buildings/units

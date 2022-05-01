@@ -1,10 +1,10 @@
 extends Node
 
-const PAN_SPEED = 1000
+const PAN_SPEED = 250
 const ZOOM_SPEED = 4
 const MIN_ZOOM = 0.2
 const MAX_ZOOM = 5
-const PAN_SCREEN_EDGE_FRACTION = 0.1
+const PAN_SCREEN_EDGE_FRACTION = 0.01
 
 @onready var camera = $"FreeCamera"
 var follow = false
@@ -40,9 +40,8 @@ func camera_input(c, delta):
 func _zoom(c, amount):
 	c.zoom.x = clamp(c.zoom.x + amount, MIN_ZOOM, MAX_ZOOM)
 	c.zoom.y = clamp(c.zoom.y + amount, MIN_ZOOM, MAX_ZOOM)
-	
-func select_input():
 
+func select_input():
 	if Input.is_action_just_pressed("select"):
 		var pos = get_viewport().get_mouse_position()
 		$UI/SelectionBox.start = pos
