@@ -42,18 +42,23 @@ func _zoom(c, amount):
 	c.zoom.y = clamp(c.zoom.y + amount, MIN_ZOOM, MAX_ZOOM)
 
 func select_input():
+	var sb = $UI/SelectionBox
 	if Input.is_action_just_pressed("select"):
 		var pos = get_viewport().get_mouse_position()
-		$UI/SelectionBox.start = pos
-		$UI/SelectionBox.end = pos
-		$UI/SelectionBox.visible = true
+		sb.start = pos
+		sb.end = pos
+		sb.visible = true
 		selecting = true
 	elif Input.is_action_just_released("select"):
-		$UI/SelectionBox.visible = false
+		for unit in get_tree().get_nodes_in_group("unit"):
+			unit.deselect()
+		for unit in sb.get_units_inside():
+			unit.select()
+		sb.visible = false
 		selecting = false
 	elif(selecting):
 		var pos = get_viewport().get_mouse_position()
-		$UI/SelectionBox.end = pos
+		sb.end = pos
 
 func _draw():
 	pass

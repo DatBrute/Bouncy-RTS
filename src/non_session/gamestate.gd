@@ -85,7 +85,7 @@ func register_player(new_player_name):
 		var player = Player.new()
 		player.id = id
 		player.name = new_player_name
-		players += [player]
+		players.append(player)
 	player_list_changed.emit()
 
 
@@ -124,7 +124,7 @@ func join_game(ip, new_player_name):
 func get_player_list():
 	var ret = []
 	for player in players:
-		ret += [player.name]
+		ret.append(player.name)
 	return ret
 
 
@@ -141,29 +141,6 @@ func begin_game():
 	if(not multiplayer.is_server()):
 		return
 	rpc("load_world")
-
-	# BEGIN GAME-SPECIFIC CODE
-#	var world = get_tree().get_root().get_node("World")
-
-#	var player_scene = load("res://player.tscn")
-#
-#	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.
-#	var spawn_points = {}
-##	spawn_points[1] = 0 # Server in spawn point 0.
-#	var spawn_point_idx = 0
-#	for p in players:
-#		spawn_points[p.id] = spawn_point_idx
-#		spawn_point_idx += 1
-#
-#	for p_id in spawn_points:
-#		var spawn_pos = world.get_node("SpawnPoints/" + str(spawn_points[p_id])).position
-#		var player = player_scene.instantiate()
-#		player.synced_position = spawn_pos
-#		player.name = str(p_id)
-#		player.set_player_name(player_name if p_id == multiplayer.get_unique_id() 
-#			else find_player_by_id(p_id).name)
-#		world.get_node("Players").add_child(player)
-	# END GAME-SPECIFIC-CODE
 
 func find_player_by_id(id):
 	for player in players:
@@ -196,7 +173,7 @@ func dir_contents(path):
 		var ret = []
 		var file_name = dir.get_next()
 		while file_name != "":
-			ret += [path + "/" + file_name]
+			ret.append(path + "/" + file_name)
 			file_name = dir.get_next()
 		return ret
 	else:

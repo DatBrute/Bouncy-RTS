@@ -29,7 +29,10 @@ func get_units_inside():
 	var x_max = max(a.x, b.x)
 	var y_min = min(a.y, b.y)
 	var y_max = max(a.y, b.y)
-	for unit in get_tree().get_nodes_in_group("Unit"):
+	var ret = []
+	for unit in get_tree().get_nodes_in_group("unit"):
 		var p = unit.global_position
-		if(p.x >= x_min and p.x <= x_max and p.y >= y_min and p.y <= y_max):
-			print(unit)
+		var s = unit.size
+		if(p.x + s >= x_min and p.x - s <= x_max and p.y + s >= y_min and p.y - s <= y_max):
+			ret.append(unit)
+	return ret
