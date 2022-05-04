@@ -48,15 +48,10 @@ func _player_disconnected(id):
 		else:
 			game_error.emit("Player " + find_player_by_id(id).name + " disconnected")
 			end_game()
-			rpc("just_before")
 			multiplayer.multiplayer_peer.close_connection()
 	else: # Game is not in progress.
 		# Unregister this player.
 		unregister_player(id)
-
-@rpc
-func just_before():
-	print("asiodfasdf")
 
 # Callback from SceneTree, only for clients (not server).
 func _connected_ok():

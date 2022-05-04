@@ -14,9 +14,21 @@ func _ready():
 	else:
 		var desktop_path = OS.get_system_dir(0).replace("\\", "/").split("/")
 		$Connect/Name.text = desktop_path[desktop_path.size() - 2]
-	if OS.get_cmdline_args().has("--host"):
+	var arguments = {}
+	for argument in OS.get_cmdline_args():
+		if argument.find("=") > -1:
+			var key_value = argument.split("=")
+			arguments[key_value[0].lstrip("--")] = key_value[1]
+		else:
+			arguments[argument.lstrip("--")] = null
+	print(arguments)
+	if arguments["host"] != null:
 		print("hosting")
 		_on_host_pressed()
+	elif arguments["join"] != null:
+		print("joining")
+		$Connect/IPAddress.text = arguments["join"]
+		_on_join_pressed()
 
 
 
