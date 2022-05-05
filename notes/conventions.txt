@@ -1,1 +1,1 @@
-L0_ prefix = local, do not sync
+always put variables not meant to be synced under a # <LOCAL> section

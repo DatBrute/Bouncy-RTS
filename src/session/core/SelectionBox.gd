@@ -1,9 +1,11 @@
 extends Control
 
-var start = Vector2.ZERO
-var end = Vector2.ZERO
 const color = Color(0, 1, 0)
 const width = 3
+
+# <LOCAL>
+var start = Vector2.ZERO
+var end = Vector2.ZERO
 
 func _process(_delta):
 	if not multiplayer.is_server():

@@ -7,15 +7,16 @@ extends CharacterBody2D
 @export var growth_mult = 1.0
 @export var knockback_mult = 1.0
 
-var L0_selected = false
+# <LOCAL>
+var selected = false
 
 func _ready():
 	pass 
 
 func select():
-	L0_selected = false
+	selected = false
 	$SelectionRing.visible = true
 
 func deselect():
-	L0_selected = false
+	selected = false
 	$SelectionRing.visible = false

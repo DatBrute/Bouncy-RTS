@@ -6,9 +6,9 @@ const MIN_ZOOM = 0.2
 const MAX_ZOOM = 5
 const PAN_SCREEN_EDGE_FRACTION = 0.01
 
+# <LOCAL>
 @onready var camera = $"FreeCamera"
-var follow = false
-
+#var follow = false
 var selecting = false
 
 func _process(delta):
