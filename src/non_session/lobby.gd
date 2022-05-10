@@ -21,7 +21,6 @@ func _ready():
 			arguments[key_value[0].lstrip("--")] = key_value[1]
 		else:
 			arguments[argument.lstrip("--")] = null
-	print(arguments)
 	if arguments.has("host"):
 		print("hosting")
 		_on_host_pressed()
@@ -98,13 +97,14 @@ func _on_game_error(errtxt):
 
 
 func refresh_lobby():
-	var players = gamestate.get_player_list()
-	players.sort()
+	var players = gamestate.players
 	$Players/List.clear()
-	if not multiplayer.is_server():
-		$Players/List.add_item(gamestate.get_player_name() + " (You)")
-	for p in players:
-		$Players/List.add_item(p)
+	for id in players.keys():
+		if id == multiplayer.get_unique_id():
+			$Players/List.add_item(gamestate.get_player_name() + " (You)")
+		else:
+			print(id, ", ", multiplayer.get_unique_id(), ", ", id == multiplayer.get_unique_id())
+			$Players/List.add_item(players[id].name)
 
 	$Players/Start.disabled = false
 

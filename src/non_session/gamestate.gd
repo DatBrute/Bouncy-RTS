@@ -19,8 +19,9 @@ var player_name = "The Warrior"
 class Player:
 	var id: int
 	var name: String
-# List of players indexed by side
-var players = []
+	
+# Dict of players by id, including self
+var players = {}
 var maps = []
 var map = 0
 
@@ -42,19 +43,19 @@ func _player_connected(id):
 func _player_disconnected(id):
 	if has_node("/root/World"): # Game is in progress.
 		if multiplayer.is_server():
-			game_error.emit("Player " + find_player_by_id(id).name + " disconnected")
+			game_error.emit("Player " + players[id].name + " disconnected")
 			end_game()
 		else:
-			game_error.emit("Player " + find_player_by_id(id).name + " disconnected")
+			game_error.emit("Player " + players[id].name + " disconnected")
 			end_game()
 			multiplayer.multiplayer_peer.close_connection()
 	else: # Game is not in progress.
 		# Unregister this player.
 		unregister_player(id)
 
-# Callback from SceneTree, only for clients (not server).
+# Callback from SceneTree, only for clients (not server), on successful connection.
 func _connected_ok():
-	# We just connected to a server
+	make_player(multiplayer.get_unique_id(), player_name)
 	connection_succeeded.emit()
 
 
@@ -75,17 +76,13 @@ func _connected_fail():
 func register_player(new_player_name):
 	print("player registered", new_player_name)
 	var id = multiplayer.get_remote_sender_id()
-	# if it's the server, do not add it, but the list has still changed by us existing
 	if(id != 1):
-		var player = Player.new()
-		player.id = id
-		player.name = new_player_name
-		players.append(player)
+		make_player(id, new_player_name)
 	player_list_changed.emit()
 
 
 func unregister_player(id):
-	var p = find_player_by_id(id)
+	var p = players[id]
 	if(p != null):
 		players.erase(p)
 		player_list_changed.emit()
@@ -93,7 +90,6 @@ func unregister_player(id):
 
 @rpc(call_local)
 func load_world():
-	print(players)
 	# Change scene.
 	var map_path = maps[0] if map == -1 else maps[map]
 	print("map_path: ", map_path)
@@ -118,13 +114,6 @@ func join_game(ip, new_player_name):
 	multiplayer.set_multiplayer_peer(peer)
 
 
-func get_player_list():
-	var ret = []
-	for player in players:
-		ret.append(player.name)
-	return ret
-
-
 func get_player_name():
 	return player_name
 
@@ -138,12 +127,6 @@ func begin_game():
 	if(not multiplayer.is_server()):
 		return
 	rpc("load_world")
-
-func find_player_by_id(id):
-	for player in players:
-		if player.id == id:
-			return player
-	return null
 
 
 func end_game():
@@ -175,3 +158,9 @@ func dir_contents(path):
 		return ret
 	else:
 		push_error("directory not found")
+
+func make_player(id, new_player_name):
+	var player = Player.new()
+	player.id = id
+	player.name = new_player_name
+	players[id] = player

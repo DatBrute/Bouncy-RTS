@@ -22,7 +22,7 @@ func _draw():
 	])
 	draw_polyline(points, color, width)
 
-func get_units_inside(team):
+func get_units_inside(_team):
 	var vp = get_viewport()
 	var offset =  vp.get_camera_2d().get_camera_screen_center() - vp.get_visible_rect().size/2
 	var a = start + offset
