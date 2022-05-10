@@ -19,8 +19,12 @@ offset_left = -126.0
 offset_top = -177.5
 offset_right = 126.0
 offset_bottom = 177.5
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
 
 [node name="Label" type="Label" parent="Players"]
 offset_left = 61.0

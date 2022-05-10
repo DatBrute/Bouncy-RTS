@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cyya62jtm4p0n"]
+[gd_scene load_steps=3 format=3 uid="uid://c1bavfcl1snpw"]
 
 [ext_resource type="Script" path="res://src/session/core/Core.gd" id="1"]
-[ext_resource type="Script" path="res://src/session/core/SelectionBox.gd" id="2_yxp8h"]
+[ext_resource type="Script" path="res://src/session/core/SelectionBox.gd" id="2_llgwr"]
 
 [node name="Core" type="Node"]
 script = ExtResource( "1" )
@@ -15,4 +15,4 @@ current = true
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource( "2_yxp8h" )
+script = ExtResource( "2_llgwr" )

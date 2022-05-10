@@ -22,10 +22,11 @@ func _ready():
 		else:
 			arguments[argument.lstrip("--")] = null
 	print(arguments)
-	if arguments["host"] != null:
+	if arguments.has("host"):
 		print("hosting")
 		_on_host_pressed()
-	elif arguments["join"] != null:
+	elif arguments.has("join"):
+		assert(arguments["join"] != null, "join supplied without an ip")
 		print("joining")
 		$Connect/IPAddress.text = arguments["join"]
 		_on_join_pressed()

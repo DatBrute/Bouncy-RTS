@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmetnsi3wlbyh"]
+
+[ext_resource type="Script" path="res://src/session/selectable/Unit.gd" id="1_gij8q"]
+[ext_resource type="Texture2D" uid="uid://b1uy2lg4a6adl" path="res://assets/bamboo spearman icon.png" id="2_8gpx6"]
+[ext_resource type="Texture2D" uid="uid://bcrlm1dnjq2wd" path="res://assets/red_torus.png" id="3_nowhc"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 90.0
+
+[node name="Unit" type="CharacterBody2D" groups=["unit"]]
+script = ExtResource( "1_gij8q" )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( "1" )
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource( "2_8gpx6" )
+
+[node name="SelectionRing" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(1.8, 1.8)
+texture = ExtResource( "3_nowhc" )

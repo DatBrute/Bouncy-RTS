@@ -21,7 +21,6 @@ class Player:
 	var name: String
 # List of players indexed by side
 var players = []
-var players_ready = []
 var maps = []
 var map = 0
 
@@ -74,6 +73,7 @@ func _connected_fail():
 # Lobby management functions.
 @rpc(any_peer)
 func register_player(new_player_name):
+	print("player registered", new_player_name)
 	var id = multiplayer.get_remote_sender_id()
 	# if it's the server, do not add it, but the list has still changed by us existing
 	if(id != 1):
@@ -93,8 +93,10 @@ func unregister_player(id):
 
 @rpc(call_local)
 func load_world():
+	print(players)
 	# Change scene.
 	var map_path = maps[0] if map == -1 else maps[map]
+	print("map_path: ", map_path)
 	var world = load(map_path).instantiate()
 	get_tree().get_root().add_child(world)
 	get_tree().get_root().get_node("Lobby").hide()

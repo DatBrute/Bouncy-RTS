@@ -10,7 +10,7 @@ var end = Vector2.ZERO
 func _process(_delta):
 	if not multiplayer.is_server():
 		update()
-		get_units_inside()
+#		get_units_inside()
 
 func _draw():
 	var points = PackedVector2Array([
@@ -22,7 +22,7 @@ func _draw():
 	])
 	draw_polyline(points, color, width)
 
-func get_units_inside():
+func get_units_inside(team):
 	var vp = get_viewport()
 	var offset =  vp.get_camera_2d().get_camera_screen_center() - vp.get_visible_rect().size/2
 	var a = start + offset
@@ -34,7 +34,7 @@ func get_units_inside():
 	var ret = []
 	for unit in get_tree().get_nodes_in_group("unit"):
 		var p = unit.global_position
-		var s = unit.size
-		if(p.x + s >= x_min and p.x - s <= x_max and p.y + s >= y_min and p.y - s <= y_max):
+		var r = unit.radius
+		if(p.x + r >= x_min and p.x - r <= x_max and p.y + r >= y_min and p.y - r <= y_max):
 			ret.append(unit)
 	return ret

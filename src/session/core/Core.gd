@@ -52,7 +52,7 @@ func select_input():
 	elif Input.is_action_just_released("select"):
 		for unit in get_tree().get_nodes_in_group("unit"):
 			unit.deselect()
-		for unit in sb.get_units_inside():
+		for unit in sb.get_units_inside(0):
 			unit.select()
 		sb.visible = false
 		selecting = false
