@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var team = 0
+@export var side = 0
 
 # <LOCAL>
 var selected = false

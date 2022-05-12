@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Bouncy RTS"
-run/main_scene="res://src/non_session/lobby.tscn"
+run/main_scene="res://src/non_session/Lobby.tscn"
 config/icon="res://assets/icon.png"
 config/features=PackedStringArray("4.0")
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
-gamestate="*res://src/non_session/gamestate.gd"
+gamestate="*res://src/non_session/Gamestate.gd"
 
 [input]
 

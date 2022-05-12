@@ -10,3 +10,5 @@ and it does not seem to destroy synced objects properly
 We need a different lobby structure. 
 With side, spectator, and switch side/spectator functionality.
 Treating server as a spectator.
+
+Players list should have two "empty" slots

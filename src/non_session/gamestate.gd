@@ -19,11 +19,14 @@ var player_name = "The Warrior"
 class Player:
 	var id: int
 	var name: String
+	var side = 0 # what units you control, 0 = spectator
 	
 # Dict of players by id, including self
 var players = {}
 var maps = []
-var map = 0
+var map_index
+var map_path
+var map_info
 
 # Signals to let lobby GUI know what's going on.
 signal player_list_changed()
@@ -74,10 +77,13 @@ func _connected_fail():
 # Lobby management functions.
 @rpc(any_peer)
 func register_player(new_player_name):
-	print("player registered", new_player_name)
 	var id = multiplayer.get_remote_sender_id()
 	if(id != 1):
 		make_player(id, new_player_name)
+	if multiplayer.is_server():
+		print("player registered: ", new_player_name)
+		rpc_id(id, "set_map", map_index)
+	print(multiplayer.get_remote_sender_id(), map_info)
 	player_list_changed.emit()
 
 
@@ -91,9 +97,7 @@ func unregister_player(id):
 @rpc(call_local)
 func load_world():
 	# Change scene.
-	var map_path = maps[0] if map == -1 else maps[map]
-	print("map_path: ", map_path)
-	var world = load(map_path).instantiate()
+	var world = load(map_path + "/World.tscn").instantiate()
 	get_tree().get_root().add_child(world)
 	get_tree().get_root().get_node("Lobby").hide()
 
@@ -105,6 +109,7 @@ func host_game(new_player_name):
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(DEFAULT_PORT, MAX_PEERS)
 	multiplayer.set_multiplayer_peer(peer)
+	rpc("set_map", 0)
 
 
 func join_game(ip, new_player_name):
@@ -119,7 +124,9 @@ func get_player_name():
 
 @rpc(any_peer, call_local)
 func set_map(index):
-	map = index
+	map_index = index
+	map_path = maps[0] if map_index == -1 else maps[map_index]
+	map_info = load(map_path + "/Info.gd").new()
 	map_changed.emit(index)
 
 @rpc(any_peer)
@@ -146,6 +153,7 @@ func _ready():
 	multiplayer.server_disconnected.connect(_server_disconnected)
 	maps = dir_contents("res://edit/maps/current")
 
+# names of files in the dir, non-recursive (folders are treated as files)
 func dir_contents(path):
 	var dir = Directory.new()
 	if dir.open(path) == OK:

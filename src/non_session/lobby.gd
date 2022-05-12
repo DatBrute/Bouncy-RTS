@@ -70,9 +70,10 @@ func _switch_to_players():
 	$Connect.hide()
 	$Players.show()
 	$Connect/ErrorLabel.text = ""
-	$Players/Map.clear()
+	$Players/MapSelect.clear()
 	for map in $"/root/gamestate".maps:
-		$Players/Map.add_item(map.trim_prefix("res://edit/maps/current/").trim_suffix(".tscn"))
+		map = map.trim_prefix("res://edit/maps/current/")
+		$Players/MapSelect.add_item(map)
 
 
 func _on_connection_failed():
@@ -98,18 +99,29 @@ func _on_game_error(errtxt):
 
 func refresh_lobby():
 	var players = gamestate.players
-	$Players/List.clear()
-	for id in players.keys():
-		if id == multiplayer.get_unique_id():
-			$Players/List.add_item(gamestate.get_player_name() + " (You)")
-		else:
-			print(id, ", ", multiplayer.get_unique_id(), ", ", id == multiplayer.get_unique_id())
-			$Players/List.add_item(players[id].name)
+	$Players/SpectatorList.clear()
+	$Players/PlayerList.clear()
+	var highest_side = 0
+	for p in players.values():
+		var side = p.side
+		if side == 0:
+			$Players/SpectatorList.add_item(p.name + (" (You)" if p.id == multiplayer.get_unique_id() else ""))
+		elif side >= highest_side:
+			highest_side = p.side
+	$Players/SpectatorList.add_item("Click here to spectate")
+	for side in range(1, gamestate.map_info.player_count + 1):
+		var side_player = null
+		for p in players.values():
+			if p.side == side:
+				side_player = p
+				break
+		$Players/PlayerList.add_item("Click here to join" if side_player == null else
+		side_player.name + (" (You)" if side_player.id == multiplayer.get_unique_id() else ""))
 
 	$Players/Start.disabled = false
 
 func refresh_map(index):
-	$Players/Map.selected = index
+	$Players/MapSelect.selected = index
 
 
 func _on_map_item_selected(index):
