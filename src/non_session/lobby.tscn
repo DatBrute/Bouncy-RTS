@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://ca88v72ayfbiv"]
+[gd_scene load_steps=2 format=3 uid="uid://7fr12ntjmxy4"]
 
-[ext_resource type="Script" path="res://src/non_session/Lobby.gd" id="1_10ds5"]
+[ext_resource type="Script" path="res://src/non_session/Lobby.gd" id="1_0at1g"]
 
 [node name="Lobby" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-script = ExtResource( "1_10ds5" )
+script = ExtResource( "1_0at1g" )
 
 [node name="Players" type="Panel" parent="."]
 visible = false
@@ -183,7 +183,7 @@ theme_override_colors/font_color = Color(0.820312, 0.291595, 0.291595, 1)
 
 [node name="ErrorDialog" type="AcceptDialog" parent="."]
 
-[connection signal="item_selected" from="Players/MapSelect" to="." method="_on_map_item_selected"]
+[connection signal="item_selected" from="Players/MapSelect" to="." method="_on_map_select_item_selected"]
 [connection signal="pressed" from="Players/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Connect/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Connect/Join" to="." method="_on_join_pressed"]

@@ -123,8 +123,7 @@ func refresh_lobby():
 func refresh_map(index):
 	$Players/MapSelect.selected = index
 
-
-func _on_map_item_selected(index):
+func _on_map_select_item_selected(index):
 	gamestate.rpc("set_map", index)
 
 func _on_start_pressed():

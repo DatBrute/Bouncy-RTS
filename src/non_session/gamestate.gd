@@ -78,20 +78,28 @@ func _connected_fail():
 @rpc(any_peer)
 func register_player(new_player_name):
 	var id = multiplayer.get_remote_sender_id()
-	if(id != 1):
+	if id != 1:
 		make_player(id, new_player_name)
 	if multiplayer.is_server():
 		print("player registered: ", new_player_name)
-		rpc_id(id, "set_map", map_index)
-	print(multiplayer.get_remote_sender_id(), map_info)
+		rpc_id(id, "after_self_registered", map_index)
+		player_list_changed.emit()
+	if id != 1 and not multiplayer.is_server() and map_info != null:
+		player_list_changed.emit()
+	print(multiplayer.get_unique_id(), ", ", multiplayer.get_remote_sender_id(), ", ", map_info)
+
+# Called from register_player, only for clients (not server)
+@rpc
+func after_self_registered(index):
+	set_map(index)
 	player_list_changed.emit()
 
-
 func unregister_player(id):
-	var p = players[id]
-	if(p != null):
-		players.erase(p)
+	if players.has(id):
+		players.erase(id)
 		player_list_changed.emit()
+	else: 
+		print("attempted to unregister the following id but they were not found: ", id)
 
 
 @rpc(call_local)
@@ -122,12 +130,7 @@ func join_game(ip, new_player_name):
 func get_player_name():
 	return player_name
 
-@rpc(any_peer, call_local)
-func set_map(index):
-	map_index = index
-	map_path = maps[0] if map_index == -1 else maps[map_index]
-	map_info = load(map_path + "/Info.gd").new()
-	map_changed.emit(index)
+
 
 @rpc(any_peer)
 func begin_game():
@@ -143,6 +146,7 @@ func end_game():
 
 	game_ended.emit()
 	players.clear()
+	clear_map()
 
 
 func _ready():
@@ -153,6 +157,7 @@ func _ready():
 	multiplayer.server_disconnected.connect(_server_disconnected)
 	maps = dir_contents("res://edit/maps/current")
 
+# https://docs.godotengine.org/en/latest/classes/class_directory.html?highlight=dir_contents
 # names of files in the dir, non-recursive (folders are treated as files)
 func dir_contents(path):
 	var dir = Directory.new()
@@ -172,3 +177,16 @@ func make_player(id, new_player_name):
 	player.id = id
 	player.name = new_player_name
 	players[id] = player
+
+@rpc(any_peer, call_local)
+func set_map(index):
+	map_index = index
+	map_path = maps[0] if map_index == -1 else maps[map_index]
+	map_info = load(map_path + "/Info.gd").new()
+	map_changed.emit(index)
+
+func clear_map():
+	map_index = 0
+	map_path = null
+	map_info = null
+	map_changed.emit(map_index)
