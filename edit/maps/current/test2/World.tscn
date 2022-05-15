@@ -7,6 +7,3 @@
 
 [node name="Entity" parent="." index="1" instance=ExtResource( "2_08b30" )]
 position = Vector2(276, -71)
-
-[node name="Entity2" parent="." index="2" instance=ExtResource( "2_08b30" )]
-position = Vector2(276, 122)

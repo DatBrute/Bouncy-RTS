@@ -86,7 +86,6 @@ func register_player(new_player_name):
 		player_list_changed.emit()
 	if id != 1 and not multiplayer.is_server() and map_info != null:
 		player_list_changed.emit()
-	print(multiplayer.get_unique_id(), ", ", multiplayer.get_remote_sender_id(), ", ", map_info)
 
 # Called from register_player, only for clients (not server)
 @rpc
@@ -190,3 +189,13 @@ func clear_map():
 	map_path = null
 	map_info = null
 	map_changed.emit(map_index)
+
+@rpc(any_peer, call_local)
+func become_side(id, side):
+	players[id].side = side
+	player_list_changed.emit()
+	
+@rpc(any_peer, call_local)
+func become_spectator(id):
+	players[id].side = 0
+	player_list_changed.emit()

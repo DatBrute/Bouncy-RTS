@@ -1,5 +1,8 @@
 extends Control
 
+var spectator_list_ids = []
+var player_list_ids = []
+
 func _ready():
 	# Called every time the node is added to the scene.
 	gamestate.connection_failed.connect(_on_connection_failed)
@@ -101,23 +104,34 @@ func refresh_lobby():
 	var players = gamestate.players
 	$Players/SpectatorList.clear()
 	$Players/PlayerList.clear()
+	spectator_list_ids = []
+	player_list_ids = []
 	var highest_side = 0
-	for p in players.values():
+	var k = players.keys()
+	k.sort()
+	for id in k:
+		var p = players[id]
 		var side = p.side
 		if side == 0:
 			$Players/SpectatorList.add_item(p.name + (" (You)" if p.id == multiplayer.get_unique_id() else ""))
+			spectator_list_ids.append(id)
 		elif side >= highest_side:
 			highest_side = p.side
 	$Players/SpectatorList.add_item("Click here to spectate")
+	spectator_list_ids.append(null)
 	for side in range(1, gamestate.map_info.player_count + 1):
 		var side_player = null
 		for p in players.values():
 			if p.side == side:
 				side_player = p
 				break
-		$Players/PlayerList.add_item("Click here to join" if side_player == null else
-		side_player.name + (" (You)" if side_player.id == multiplayer.get_unique_id() else ""))
-
+		if side_player == null:
+			$Players/PlayerList.add_item("Click here to join")
+			player_list_ids.append(null)
+		else:
+			$Players/PlayerList.add_item(side_player.name + (" (You)" if side_player.id == multiplayer.get_unique_id() else ""))
+			player_list_ids.append(side_player.id)
+	
 	$Players/Start.disabled = false
 
 func refresh_map(index):
@@ -128,3 +142,14 @@ func _on_map_select_item_selected(index):
 
 func _on_start_pressed():
 	gamestate.rpc("begin_game")
+
+
+func _on_player_list_item_selected(index):
+	var my_id = multiplayer.get_unique_id()
+	if my_id != 1 and player_list_ids[index] == null:
+		gamestate.rpc("become_side", my_id, index + 1)
+
+func _on_spectator_list_item_selected(index):
+	var my_id = multiplayer.get_unique_id()
+	if my_id != 1 and spectator_list_ids[index] == null:
+		gamestate.rpc("become_spectator", my_id)
