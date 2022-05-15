@@ -52,8 +52,9 @@ func select_input():
 	elif Input.is_action_just_released("select"):
 		for unit in get_tree().get_nodes_in_group("unit"):
 			unit.deselect()
-		for unit in sb.get_units_inside(0):
-			unit.select()
+		if not gamestate.is_spectator():
+			for unit in sb.get_units_inside(gamestate.get_me().side):
+				unit.select()
 		sb.visible = false
 		selecting = false
 	elif(selecting):

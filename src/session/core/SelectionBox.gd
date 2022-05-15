@@ -8,9 +8,8 @@ var start = Vector2.ZERO
 var end = Vector2.ZERO
 
 func _process(_delta):
-	if not multiplayer.is_server():
+	if not gamestate.is_spectator():
 		update()
-#		get_units_inside()
 
 func _draw():
 	var points = PackedVector2Array([

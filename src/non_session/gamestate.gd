@@ -199,3 +199,11 @@ func become_side(id, side):
 func become_spectator(id):
 	players[id].side = 0
 	player_list_changed.emit()
+
+func is_spectator():
+	var id = multiplayer.get_unique_id()
+	assert(id != 1 or multiplayer.is_server())
+	return multiplayer.is_server() or players[id].side == 0
+
+func get_me():
+	return players[multiplayer.get_unique_id()]
