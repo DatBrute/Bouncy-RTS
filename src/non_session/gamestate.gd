@@ -39,7 +39,9 @@ signal game_error(what)
 # Callback from SceneTree.
 func _player_connected(id):
 	# Registration of a client beings here, tell the connected player that we are here.
-	rpc_id(id, StringName("register_player"), player_name)
+	var our_id = multiplayer.get_unique_id()
+	var side = 0 if not players.has(our_id) else players[our_id].side
+	rpc_id(id, StringName("register_player"), player_name, side)
 
 
 # Callback from SceneTree.
@@ -58,7 +60,7 @@ func _player_disconnected(id):
 
 # Callback from SceneTree, only for clients (not server), on successful connection.
 func _connected_ok():
-	make_player(multiplayer.get_unique_id(), player_name)
+	make_player(multiplayer.get_unique_id(), player_name, 0)
 	connection_succeeded.emit()
 
 
@@ -76,21 +78,26 @@ func _connected_fail():
 
 # Lobby management functions.
 @rpc(any_peer)
-func register_player(new_player_name):
+func register_player(new_player_name, side):
 	var id = multiplayer.get_remote_sender_id()
 	if id != 1:
-		make_player(id, new_player_name)
+		make_player(id, new_player_name, side)
 	if multiplayer.is_server():
-		print("player registered: ", new_player_name)
 		rpc_id(id, "after_self_registered", map_index)
 		player_list_changed.emit()
 	if id != 1 and not multiplayer.is_server() and map_info != null:
+		# if we are not the server and not receiving from the server
+		# (and map info has been set because we don't know player count before then)
 		player_list_changed.emit()
 
 # Called from register_player, only for clients (not server)
+# After_self_registered and functions with that as a prefix
+# ...are used to pass data immediately after full connection 
+# However due to object encoding it can get a bit tricky
+# client.player_connected->server.register_player-client.after_self_registered
 @rpc
-func after_self_registered(index):
-	set_map(index)
+func after_self_registered(new_map_index):
+	set_map(new_map_index)
 	player_list_changed.emit()
 
 func unregister_player(id):
@@ -171,10 +178,11 @@ func dir_contents(path):
 	else:
 		push_error("directory not found")
 
-func make_player(id, new_player_name):
+func make_player(id, new_player_name, side):
 	var player = Player.new()
 	player.id = id
 	player.name = new_player_name
+	player.side = side
 	players[id] = player
 
 @rpc(any_peer, call_local)
