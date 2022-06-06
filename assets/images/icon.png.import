@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1uy2lg4a6adl"
-path="res://.godot/imported/bamboo spearman icon.png-b020cfd280a67213e7b6c9cda8c84792.ctex"
+uid="uid://be136fnx8rhe3"
+path="res://.godot/imported/icon.png-e2b956fc1cad352d3b1bbca4fcd64fa9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/bamboo spearman icon.png"
-dest_files=["res://.godot/imported/bamboo spearman icon.png-b020cfd280a67213e7b6c9cda8c84792.ctex"]
+source_file="res://assets/images/icon.png"
+dest_files=["res://.godot/imported/icon.png-e2b956fc1cad352d3b1bbca4fcd64fa9.ctex"]
 
 [params]
 

@@ -21,7 +21,7 @@ func _draw():
 	])
 	draw_polyline(points, color, width)
 
-func get_units_inside(_side):
+func get_units_inside(side):
 	var vp = get_viewport()
 	var offset =  vp.get_camera_2d().get_camera_screen_center() - vp.get_visible_rect().size/2
 	var a = start + offset
@@ -32,8 +32,10 @@ func get_units_inside(_side):
 	var y_max = max(a.y, b.y)
 	var ret = []
 	for unit in get_tree().get_nodes_in_group("unit"):
-		var p = unit.global_position
-		var r = unit.radius
-		if(p.x + r >= x_min and p.x - r <= x_max and p.y + r >= y_min and p.y - r <= y_max):
-			ret.append(unit)
+		if(unit.side == side):
+			var p = unit.global_position
+			var r = unit.radius
+			print(r)
+			if(p.x + r >= x_min and p.x - r <= x_max and p.y + r >= y_min and p.y - r <= y_max):
+				ret.append(unit)
 	return ret

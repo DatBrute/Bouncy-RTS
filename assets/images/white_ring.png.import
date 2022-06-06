@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcrlm1dnjq2wd"
-path="res://.godot/imported/red_torus.png-37cf8e35f1ed439c770de851139ad676.ctex"
+uid="uid://b7wbgsenmodr6"
+path="res://.godot/imported/white_ring.png-47a7baf8bf2416df9a5fd825d99cd7cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/red_torus.png"
-dest_files=["res://.godot/imported/red_torus.png-37cf8e35f1ed439c770de851139ad676.ctex"]
+source_file="res://assets/images/white_ring.png"
+dest_files=["res://.godot/imported/white_ring.png-47a7baf8bf2416df9a5fd825d99cd7cb.ctex"]
 
 [params]
 
@@ -29,5 +29,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1

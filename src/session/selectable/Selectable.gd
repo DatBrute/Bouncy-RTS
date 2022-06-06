@@ -1,13 +1,15 @@
 extends CharacterBody2D
 
-@export var side = 0
+@export var side = 1
 
 # <LOCAL>
 var selected = false
+
 @onready var radius = $CollisionShape2D.shape.radius
 
 func _ready():
-	pass 
+	var shape = $CollisionShape2D
+	radius = $CollisionShape2D.shape.radius
 
 func select():
 	selected = false
