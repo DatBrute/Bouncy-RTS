@@ -33,3 +33,5 @@ visible = false
 modulate = Color(1, 0.517647, 0, 1)
 scale = Vector2(1.4, 1.4)
 texture = ExtResource( "3_f5o4r" )
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

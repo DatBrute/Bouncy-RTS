@@ -15,3 +15,7 @@ func _ready():
 		$Team1Ring.visible = true
 	else:
 		$Team2Ring.visible = true
+
+func _physics_process(_delta):
+	if Input.is_action_pressed("act") and selected:
+		global_position = get_global_mouse_position()

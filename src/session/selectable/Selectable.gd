@@ -12,7 +12,7 @@ func _ready():
 	radius = $CollisionShape2D.shape.radius
 
 func select():
-	selected = false
+	selected = true
 	$SelectionRing.visible = true
 
 func deselect():
