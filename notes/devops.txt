@@ -2,8 +2,18 @@ Create server on vultr, anything with ipv4 cuz idk, which costs $1/month extra
 
 on your terminal: ssh root@address
 
+install git and zsh
+here's a reasonable .zshrc:
+"""
+echo -e -n "\e[?17;14;224c"
+PROMPT='%B%1~%b %F{009}$%f '
+RPROMPT='%F{015}%T%f'
+"""
+to change the user password: sudo passwd root
+
 ssh-keygen -t ed25519
-vi the .pub and throw it in your github SSH settings (try right-clicking the terminal tab if you have trouble copying)
+DO NOT name the file, or change the ed25519, or your ssh agent won't be able to find it or somesuch
+vi the .pub and throw it in your github SSH settings (cat and ctrl-shift-c for easy copying)
 
 git clone the project
 insert a godot exe from https://downloads.tuxfamily.org/godotengine/ (it's too large to go on Github)
