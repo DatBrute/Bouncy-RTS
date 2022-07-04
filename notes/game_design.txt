@@ -21,3 +21,20 @@ Bump multiplier
 May be a good idea to introduce cliffs that can be climbed/thrown off if the game has a knockback focus.
 Maybe colors representing elements and units/nations have a home element and they merge together and make big boom.
 Probably damage and maybe stun for hitting against buildings/units
+
+Other ideas: (post-RTS-asset-HB-era):
+- Every unit is a hero
+- Units get bigger and stronger
+- Boardable ships
+	-crew fights until dead with no retreat
+	-both are stunned
+	- both can still take dmg from other ships
+	- if ship destroyed crew auto-embarks but is damaged
+		- abandon ship? auto-embark -> board?
+- Ship eco: can only trade with other islands
+- Limited movement at a time, possibly in TBS form
+- No resources, only buildtime, tech web rather than tech tree
+- Instanced timed arena fights or Klaxon pausing
+- Advanced Nevsky-style supply
+- everyone has creep-style auras, or maybe auras of different elements
+- singing points for heroes, only 1 hero per, other units do nothing and it reveals you

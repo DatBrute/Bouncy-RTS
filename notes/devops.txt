@@ -17,7 +17,7 @@ vi the .pub and throw it in your github SSH settings (cat and ctrl-shift-c for e
 
 git clone the project
 insert a godot exe from https://downloads.tuxfamily.org/godotengine/ (it's too large to go on Github)
-run the godot exe by calling its absolute path (possibly after calling chmod +x on it)
+run the godot exe by calling its absolute path (possibly after calling "chmod -R 0777 *.*" on it) (remember to port forward)
 
 IMPORTANT:
 for it to work, you may have to type "ufw allow 10567/udp" on the server
